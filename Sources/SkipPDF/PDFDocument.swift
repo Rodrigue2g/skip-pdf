@@ -9,7 +9,7 @@ import Foundation
 #if canImport(PDFKit)
 import PDFKit
 public typealias PDFDocument = PDFKit.PDFDocument
-#else
+#elseif SKIP
 public class PDFDocument {
     private var pdfRenderer: android.graphics.pdf.PdfRenderer?
 
@@ -45,5 +45,13 @@ public class PDFDocument {
         pdfRenderer?.close()
         pdfRenderer = nil
     }
+}
+#else
+public class PDFDocument {
+    private init() {}
+    public static func load(url: URL) -> PDFDocument? { return nil }
+    public var pageCount: Int { return 0 }
+    public func page(at index: Int) -> PDFPage? { return nil }
+    public func close() {}
 }
 #endif
