@@ -9,7 +9,7 @@
 import CoreGraphics
 
 #elseif SKIP
-import _Builtin_stdint
+//import _Builtin_stdint
 
 //extension CGContext {
 //
@@ -41,75 +41,75 @@ import _Builtin_stdint
 //    public func setDestination(_ name: CFString, for rect: CGRect)
 //}
 
-public func CGPDFContextSetParentTree(_ context: CGContext, _ parentTreeDictionary: CGPDFDictionaryRef) {
-    fatalError()
-}
+//public func CGPDFContextSetParentTree(_ context: CGContext, _ parentTreeDictionary: CGPDFDictionaryRef) {
+//    fatalError()
+//}
+//
+//public func CGPDFContextSetIDTree(_ context: CGContext, _ IDTreeDictionary: CGPDFDictionaryRef) {
+//    fatalError()
+//}
+//
+//public func CGPDFContextSetPageTagStructureTree(_ context: CGContext, _ pageTagStructureTreeDictionary: CFDictionary) {
+//    fatalError()
+//}
 
-public func CGPDFContextSetIDTree(_ context: CGContext, _ IDTreeDictionary: CGPDFDictionaryRef) {
-    fatalError()
-}
+public let kCGPDFContextMediaBox = "kCGPDFContextMediaBox"
 
-public func CGPDFContextSetPageTagStructureTree(_ context: CGContext, _ pageTagStructureTreeDictionary: CFDictionary) {
-    fatalError()
-}
+public let kCGPDFContextCropBox = "kCGPDFContextCropBox"
 
-public let kCGPDFContextMediaBox: CFString = "kCGPDFContextMediaBox"
+public let kCGPDFContextBleedBox = "kCGPDFContextBleedBox"
 
-public let kCGPDFContextCropBox: CFString = "kCGPDFContextCropBox"
+public let kCGPDFContextTrimBox = "kCGPDFContextTrimBox"
 
-public let kCGPDFContextBleedBox: CFString = "kCGPDFContextBleedBox"
+public let kCGPDFContextArtBox = "kCGPDFContextArtBox"
 
-public let kCGPDFContextTrimBox: CFString = "kCGPDFContextTrimBox"
+public let kCGPDFContextTitle = "kCGPDFContextTitle"
 
-public let kCGPDFContextArtBox: CFString = "kCGPDFContextArtBox"
+public let kCGPDFContextAuthor = "kCGPDFContextAuthor"
 
-public let kCGPDFContextTitle: CFString = "kCGPDFContextTitle"
+public let kCGPDFContextSubject = "kCGPDFContextSubject"
 
-public let kCGPDFContextAuthor: CFString = "kCGPDFContextAuthor"
+public let kCGPDFContextKeywords = "kCGPDFContextKeywords"
 
-public let kCGPDFContextSubject: CFString = "kCGPDFContextSubject"
+public let kCGPDFContextCreator = "kCGPDFContextCreator"
 
-public let kCGPDFContextKeywords: CFString = "kCGPDFContextKeywords"
+public let kCGPDFContextOwnerPassword = "kCGPDFContextOwnerPassword"
 
-public let kCGPDFContextCreator: CFString = "kCGPDFContextCreator"
+public let kCGPDFContextUserPassword = "kCGPDFContextUserPassword"
 
-public let kCGPDFContextOwnerPassword: CFString = "kCGPDFContextOwnerPassword"
+public let kCGPDFContextEncryptionKeyLength = "kCGPDFContextEncryptionKeyLength"
 
-public let kCGPDFContextUserPassword: CFString = "kCGPDFContextUserPassword"
+public let kCGPDFContextAllowsPrinting = "kCGPDFContextAllowsPrinting"
 
-public let kCGPDFContextEncryptionKeyLength: CFString = "kCGPDFContextEncryptionKeyLength"
+public let kCGPDFContextAllowsCopying = "kCGPDFContextAllowsCopying"
 
-public let kCGPDFContextAllowsPrinting: CFString = "kCGPDFContextAllowsPrinting"
+public let kCGPDFContextOutputIntent = "kCGPDFContextOutputIntent"
 
-public let kCGPDFContextAllowsCopying: CFString = "kCGPDFContextAllowsCopying"
+public let kCGPDFXOutputIntentSubtype = "kCGPDFXOutputIntentSubtype"
 
-public let kCGPDFContextOutputIntent: CFString = "kCGPDFContextOutputIntent"
+public let kCGPDFXOutputConditionIdentifier = "kCGPDFXOutputConditionIdentifier"
 
-public let kCGPDFXOutputIntentSubtype: CFString = "kCGPDFXOutputIntentSubtype"
+public let kCGPDFXOutputCondition = "kCGPDFXOutputCondition"
 
-public let kCGPDFXOutputConditionIdentifier: CFString = "kCGPDFXOutputConditionIdentifier"
+public let kCGPDFXRegistryName = "kCGPDFXRegistryName"
 
-public let kCGPDFXOutputCondition: CFString = "kCGPDFXOutputCondition"
+public let kCGPDFXInfo = "kCGPDFXInfo"
 
-public let kCGPDFXRegistryName: CFString = "kCGPDFXRegistryName"
+public let kCGPDFXDestinationOutputProfile = "kCGPDFXDestinationOutputProfile"
 
-public let kCGPDFXInfo: CFString = "kCGPDFXInfo"
+public let kCGPDFContextOutputIntents = "kCGPDFContextOutputIntents"
 
-public let kCGPDFXDestinationOutputProfile: CFString = "kCGPDFXDestinationOutputProfile"
+public let kCGPDFContextAccessPermissions = "kCGPDFContextAccessPermissions"
 
-public let kCGPDFContextOutputIntents: CFString = "kCGPDFContextOutputIntents"
-
-public let kCGPDFContextAccessPermissions: CFString = "kCGPDFContextAccessPermissions"
-
-public func CGPDFContextSetOutline(_ context: CGContext, _ outline: CFDictionary?) {
-    fatalError()
-}
-
-
-public let kCGPDFContextCreateLinearizedPDF: CFString = "kCGPDFContextCreateLinearizedPDF"
+//public func CGPDFContextSetOutline(_ context: CGContext, _ outline: CFDictionary?) {
+//    fatalError()
+//}
 
 
-public let kCGPDFContextCreatePDFA: CFString = "kCGPDFContextCreatePDFA"
+public let kCGPDFContextCreateLinearizedPDF = "kCGPDFContextCreateLinearizedPDF"
+
+
+public let kCGPDFContextCreatePDFA = "kCGPDFContextCreatePDFA"
 
 
 public enum CGPDFTagType : Int32, @unchecked Sendable {
