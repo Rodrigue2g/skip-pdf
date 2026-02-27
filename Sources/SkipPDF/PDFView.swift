@@ -5,11 +5,6 @@
 //  Created by Rodrigue de Guerre on 27/02/2026.
 //
 
-//
-//  PDFView.swift
-//  skip-pdf
-//
-
 public enum PDFDisplayMode: Int, Sendable {
     case singlePage = 0
     case singlePageContinuous = 1
@@ -130,6 +125,14 @@ public struct PDFView: UIViewRepresentable {
 }
 
 #elseif SKIP
+// SKIP INSERT: import androidx.compose.foundation.*
+// SKIP INSERT: import androidx.compose.foundation.layout.*
+// SKIP INSERT: import androidx.compose.ui.*
+// SKIP INSERT: import androidx.compose.ui.graphics.*
+// SKIP INSERT: import androidx.compose.ui.graphics.asImageBitmap
+// SKIP INSERT: import androidx.compose.ui.layout.*
+// SKIP INSERT: import androidx.compose.ui.unit.*
+// SKIP INSERT: import androidx.compose.ui.draw.*
 import Foundation
 import SwiftUI
 
@@ -138,7 +141,6 @@ public struct PDFView: View {
     public var autoScales: Bool = true
     public var displayMode: PDFDisplayMode = .singlePageContinuous
     public var displayDirection: PDFDisplayDirection = .vertical
-    // Fix 1: Color(0xFF...) deprecated — use RGB components
     public var backgroundColor: Color = Color(red: 0.949, green: 0.949, blue: 0.969, opacity: 1.0)
     public var scaleFactor: Double = 1.0
     public var minScaleFactor: Double = 0.25
@@ -218,7 +220,6 @@ struct PDFPageComposer: ContentComposer {
         let config         = androidx.compose.ui.platform.LocalConfiguration.current
         let screenWidthDp  = config.screenWidthDp
         let screenHeightDp = config.screenHeightDp
-        // Fix 2: explicit Dp type for paddingDp to avoid .dp inference failures
         let paddingDp: androidx.compose.ui.unit.Dp = 12.dp
         let isHorizontal   = displayDirection == .horizontal
         let isSinglePage   = displayMode == .singlePage || displayMode == .twoUp
@@ -230,17 +231,13 @@ struct PDFPageComposer: ContentComposer {
             }
         }
 
-        // Fix 3: explicit Modifier type so .fillMaxSize() resolves
-        // Fix 4: use backgroundColor property via asComposeColor()
         let bgModifier: androidx.compose.ui.Modifier = context.modifier
             .fillMaxSize()
             .background(backgroundColor.asComposeColor())
 
-        // Fix 5: explicit Dp type on spacing to resolve ternary type inference
         let hSpacing: androidx.compose.ui.unit.Dp = isSinglePage ? screenWidthDp.dp  : 12.dp
         let vSpacing: androidx.compose.ui.unit.Dp = isSinglePage ? screenHeightDp.dp : 12.dp
 
-        // paddingDp as Int for pixel arithmetic in renderPage
         let paddingPx = 12
 
         if isHorizontal {
@@ -317,17 +314,14 @@ struct PDFPageComposer: ContentComposer {
         pdfPage.renderToBitmap(bitmap: bitmap)
         pdfPage.close()
 
-        // Fix 6: explicit Modifier type on baseModifier
         let baseModifier: androidx.compose.ui.Modifier = isHorizontal
             ? androidx.compose.ui.Modifier.width((screenWidthDp - paddingPx * 2).dp)
             : androidx.compose.ui.Modifier.fillMaxWidth()
 
-        // Fix 7: explicit Modifier type on cardModifier
         let cardModifier: androidx.compose.ui.Modifier = baseModifier
             .clip(androidx.compose.foundation.shape.RoundedCornerShape(8.dp))
             .background(androidx.compose.ui.graphics.Color.White)
 
-        // Fix 8: explicit ContentScale type
         let contentScale: androidx.compose.ui.layout.ContentScale = autoScales
             ? androidx.compose.ui.layout.ContentScale.FillWidth
             : androidx.compose.ui.layout.ContentScale.None
@@ -342,7 +336,6 @@ struct PDFPageComposer: ContentComposer {
 }
 
 #elseif canImport(SwiftUI)
-// macOS CI
 import Foundation
 import SwiftUI
 
@@ -396,7 +389,6 @@ public struct PDFView: View {
 }
 
 #else
-// Native Android Swift (Fuse build)
 import Foundation
 import SkipUI
 
@@ -443,7 +435,6 @@ public struct PDFView: View {
     }
 
     public init(url: URL, autoScales: Bool = true) {
-        // Stub — real loading happens in #elseif SKIP
         self.init(document: nil, autoScales: autoScales)
     }
 

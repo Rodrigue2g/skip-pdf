@@ -104,14 +104,6 @@ public class PDFRenderer {
     }
 }
 #elseif SKIP
-// SKIP INSERT: import androidx.compose.foundation.*
-// SKIP INSERT: import androidx.compose.foundation.layout.*
-// SKIP INSERT: import androidx.compose.ui.*
-// SKIP INSERT: import androidx.compose.ui.graphics.*
-// SKIP INSERT: import androidx.compose.ui.graphics.asImageBitmap
-// SKIP INSERT: import androidx.compose.ui.layout.*
-// SKIP INSERT: import androidx.compose.ui.unit.*
-// SKIP INSERT: import androidx.compose.ui.draw.*
 public class PDFRenderer {
     private let bounds: PDFRect
 
