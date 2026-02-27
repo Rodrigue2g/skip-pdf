@@ -1,0 +1,42 @@
+{
+  "originHash" : "811065c1cf7015de10dbe7160abe3bb34f02f8fd939acfff9c6daef45358040e",
+  "pins" : [
+    {
+      "identity" : "skip",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip.git",
+      "state" : {
+        "revision" : "f7c1e82bc4731a11fc456fe9a53b8807ef9efcd7",
+        "version" : "1.7.2"
+      }
+    },
+    {
+      "identity" : "skip-foundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip-foundation.git",
+      "state" : {
+        "revision" : "338dab7c947953e18403a05b7f60da6c1417b5b5",
+        "version" : "1.3.12"
+      }
+    },
+    {
+      "identity" : "skip-lib",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip-lib.git",
+      "state" : {
+        "revision" : "112874f0222f4815798c924e2b299ba23eb53111",
+        "version" : "1.3.8"
+      }
+    },
+    {
+      "identity" : "skip-unit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip-unit.git",
+      "state" : {
+        "revision" : "646b528c7c7bad2edb1e73747d6b280b54e128a2",
+        "version" : "1.5.0"
+      }
+    }
+  ],
+  "version" : 3
+}
