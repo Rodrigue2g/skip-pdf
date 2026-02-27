@@ -124,7 +124,7 @@ public class PDFRenderer {
         let stream = java.io.ByteArrayOutputStream()
         document.writeTo(stream)
         document.close()
-        return Data(bytes: stream.toByteArray().toUByteArray())
+        return Data(bytes: stream.toByteArray().toUByteArray().asList())
     }
 
     public func writePDF(
