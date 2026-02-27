@@ -5,9 +5,6 @@
 //  Created by Rodrigue de Guerre on 27/02/2026.
 //
 
-import Foundation
-import SwiftUI
-
 public enum PDFDisplayMode: Int, Sendable {
     case singlePage = 0
     case singlePageContinuous = 1
@@ -27,6 +24,8 @@ public enum PDFInterpolationQuality: Int, Sendable {
 }
 
 #if canImport(PDFKit) && canImport(UIKit)
+import Foundation
+import SwiftUI
 import PDFKit
 import UIKit
 
@@ -134,6 +133,9 @@ public struct PDFView: UIViewRepresentable {
 }
 
 #elseif SKIP
+import Foundation
+import SwiftUI
+
 public struct PDFView: View {
     public var document: PDFDocument?
     public var autoScales: Bool                      = true
