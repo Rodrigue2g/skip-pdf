@@ -11,8 +11,7 @@ public typealias PDFRect  = CGRect
 public typealias PDFPoint = CGPoint
 public typealias PDFSize  = CGSize
 #else
-// Used on Android (#if SKIP) and on macOS CI runner (no CoreGraphics)
-public struct PDFRect {
+public struct PDFRect: Sendable {
     public var x: Double
     public var y: Double
     public var width: Double
@@ -22,13 +21,15 @@ public struct PDFRect {
     }
     public static let zero = PDFRect(x: 0, y: 0, width: 0, height: 0)
 }
-public struct PDFPoint {
+
+public struct PDFPoint: Sendable {
     public var x: Double
     public var y: Double
     public init(x: Double, y: Double) { self.x = x; self.y = y }
     public static let zero = PDFPoint(x: 0, y: 0)
 }
-public struct PDFSize {
+
+public struct PDFSize: Sendable {
     public var width: Double
     public var height: Double
     public init(width: Double, height: Double) { self.width = width; self.height = height }
