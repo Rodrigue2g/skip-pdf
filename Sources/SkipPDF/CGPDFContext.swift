@@ -188,31 +188,31 @@ public enum CGPDFTagType : Int32, @unchecked Sendable {
     
     case code = 505
     
-    case link = 506
-    
-    case annotation = 507
-    
-    case ruby = 600
-    
-    case rubyBaseText = 601
-    
-    case rubyAnnotationText = 602
-    
-    case rubyPunctuation = 603
-    
-    case warichu = 604
-    
-    case warichuText = 605
-    
-    case warichuPunctiation = 606
-    
-    case figure = 700
-    
-    case formula = 701
-    
-    case form = 702
-    
-    case object = 800
+//    case link = 506
+//    
+//    case annotation = 507
+//    
+//    case ruby = 600
+//    
+//    case rubyBaseText = 601
+//    
+//    case rubyAnnotationText = 602
+//    
+//    case rubyPunctuation = 603
+//    
+//    case warichu = 604
+//    
+//    case warichuText = 605
+//    
+//    case warichuPunctiation = 606
+//    
+//    case figure = 700
+//    
+//    case formula = 701
+//    
+//    case form = 702
+//    
+//    case object = 800
 }
 
 //extension CGPDFTagType {

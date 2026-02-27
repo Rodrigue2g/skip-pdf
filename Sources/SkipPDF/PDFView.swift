@@ -5,6 +5,11 @@
 //  Created by Rodrigue de Guerre on 27/02/2026.
 //
 
+//
+//  PDFView.swift
+//  skip-pdf
+//
+
 public enum PDFDisplayMode: Int, Sendable {
     case singlePage = 0
     case singlePageContinuous = 1
@@ -30,7 +35,6 @@ import PDFKit
 import UIKit
 
 public struct PDFView: UIViewRepresentable {
-    // MARK: - Properties (matching Android API surface)
     public var document: PDFDocument?
     public var autoScales: Bool = true
     public var displayMode: PDFDisplayMode = .singlePageContinuous
@@ -44,8 +48,6 @@ public struct PDFView: UIViewRepresentable {
     public var displaysPageBreaks: Bool = true
     public var displaysAsBook: Bool = false
     public var goToPageIndex: Int?
-
-    // MARK: - Init
 
     public init(
         document: PDFDocument? = nil,
@@ -62,57 +64,52 @@ public struct PDFView: UIViewRepresentable {
         displaysAsBook: Bool = false,
         goToPageIndex: Int? = nil
     ) {
-        self.document              = document
-        self.autoScales            = autoScales
-        self.displayMode           = displayMode
-        self.displayDirection      = displayDirection
-        self.backgroundColor       = backgroundColor
-        self.scaleFactor           = scaleFactor
-        self.minScaleFactor        = minScaleFactor
-        self.maxScaleFactor        = maxScaleFactor
-        self.interpolationQuality  = interpolationQuality
-        self.pageShadowsEnabled    = pageShadowsEnabled
-        self.displaysPageBreaks    = displaysPageBreaks
-        self.displaysAsBook        = displaysAsBook
-        self.goToPageIndex         = goToPageIndex
+        self.document             = document
+        self.autoScales           = autoScales
+        self.displayMode          = displayMode
+        self.displayDirection     = displayDirection
+        self.backgroundColor      = backgroundColor
+        self.scaleFactor          = scaleFactor
+        self.minScaleFactor       = minScaleFactor
+        self.maxScaleFactor       = maxScaleFactor
+        self.interpolationQuality = interpolationQuality
+        self.pageShadowsEnabled   = pageShadowsEnabled
+        self.displaysPageBreaks   = displaysPageBreaks
+        self.displaysAsBook       = displaysAsBook
+        self.goToPageIndex        = goToPageIndex
     }
 
     public init(url: URL, autoScales: Bool = true) {
         self.init(document: PDFDocument(url: url), autoScales: autoScales)
     }
 
-    // MARK: - UIViewRepresentable
-
     public func makeUIView(context: Context) -> PDFKit.PDFView {
         let view = PDFKit.PDFView()
-        view.autoScales          = autoScales
-        view.displayMode         = toPDFKitDisplayMode(displayMode)
-        view.displayDirection    = displayDirection == .vertical ? .vertical : .horizontal
-        view.minScaleFactor      = minScaleFactor
-        view.maxScaleFactor      = maxScaleFactor
-        view.displaysPageBreaks  = displaysPageBreaks
-        view.displaysAsBook      = displaysAsBook
-        view.pageShadowsEnabled  = pageShadowsEnabled
+        view.autoScales           = autoScales
+        view.displayMode          = toPDFKitDisplayMode(displayMode)
+        view.displayDirection     = displayDirection == .vertical ? .vertical : .horizontal
+        view.minScaleFactor       = minScaleFactor
+        view.maxScaleFactor       = maxScaleFactor
+        view.displaysPageBreaks   = displaysPageBreaks
+        view.displaysAsBook       = displaysAsBook
+        view.pageShadowsEnabled   = pageShadowsEnabled
         view.interpolationQuality = toPDFKitInterpolation(interpolationQuality)
-        view.backgroundColor     = UIColor(backgroundColor)
+        view.backgroundColor      = UIColor(backgroundColor)
         return view
     }
 
     public func updateUIView(_ pdfView: PDFKit.PDFView, context: Context) {
-        pdfView.document         = document
-        pdfView.autoScales       = autoScales
-        pdfView.scaleFactor      = scaleFactor
-        pdfView.minScaleFactor   = minScaleFactor
-        pdfView.maxScaleFactor   = maxScaleFactor
-
+        pdfView.document       = document
+        pdfView.autoScales     = autoScales
+        pdfView.scaleFactor    = scaleFactor
+        pdfView.minScaleFactor = minScaleFactor
+        pdfView.maxScaleFactor = maxScaleFactor
         if let index = goToPageIndex,
            let doc   = document,
            let page  = doc.page(at: index) {
             pdfView.go(to: page)
         }
     }
-
-    // MARK: - Helpers
 
     private func toPDFKitDisplayMode(_ mode: PDFDisplayMode) -> PDFKit.PDFDisplayMode {
         switch mode {
@@ -138,13 +135,18 @@ import SwiftUI
 
 public struct PDFView: View {
     public var document: PDFDocument?
-    public var autoScales: Bool                      = true
-    public var displayMode: PDFDisplayMode           = .singlePageContinuous
+    public var autoScales: Bool = true
+    public var displayMode: PDFDisplayMode = .singlePageContinuous
     public var displayDirection: PDFDisplayDirection = .vertical
-    public var backgroundColor: Color                = Color(0xFFF2F2F7)
-    public var scaleFactor: Double                   = 1.0
-    public var minScaleFactor: Double                = 0.25
-    public var maxScaleFactor: Double                = 4.0
+    // Fix 1: Color(0xFF...) deprecated — use RGB components
+    public var backgroundColor: Color = Color(red: 0.949, green: 0.949, blue: 0.969, opacity: 1.0)
+    public var scaleFactor: Double = 1.0
+    public var minScaleFactor: Double = 0.25
+    public var maxScaleFactor: Double = 4.0
+    public var interpolationQuality: PDFInterpolationQuality = .high
+    public var pageShadowsEnabled: Bool = true
+    public var displaysPageBreaks: Bool = true
+    public var displaysAsBook: Bool = false
     public var goToPageIndex: Int?
 
     public init(
@@ -152,21 +154,29 @@ public struct PDFView: View {
         autoScales: Bool = true,
         displayMode: PDFDisplayMode = .singlePageContinuous,
         displayDirection: PDFDisplayDirection = .vertical,
-        backgroundColor: Color = Color(0xFFF2F2F7),
+        backgroundColor: Color = Color(red: 0.949, green: 0.949, blue: 0.969, opacity: 1.0),
         scaleFactor: Double = 1.0,
         minScaleFactor: Double = 0.25,
         maxScaleFactor: Double = 4.0,
+        interpolationQuality: PDFInterpolationQuality = .high,
+        pageShadowsEnabled: Bool = true,
+        displaysPageBreaks: Bool = true,
+        displaysAsBook: Bool = false,
         goToPageIndex: Int? = nil
     ) {
-        self.document         = document
-        self.autoScales       = autoScales
-        self.displayMode      = displayMode
-        self.displayDirection = displayDirection
-        self.backgroundColor  = backgroundColor
-        self.scaleFactor      = scaleFactor
-        self.minScaleFactor   = minScaleFactor
-        self.maxScaleFactor   = maxScaleFactor
-        self.goToPageIndex    = goToPageIndex
+        self.document             = document
+        self.autoScales           = autoScales
+        self.displayMode          = displayMode
+        self.displayDirection     = displayDirection
+        self.backgroundColor      = backgroundColor
+        self.scaleFactor          = scaleFactor
+        self.minScaleFactor       = minScaleFactor
+        self.maxScaleFactor       = maxScaleFactor
+        self.interpolationQuality = interpolationQuality
+        self.pageShadowsEnabled   = pageShadowsEnabled
+        self.displaysPageBreaks   = displaysPageBreaks
+        self.displaysAsBook       = displaysAsBook
+        self.goToPageIndex        = goToPageIndex
     }
 
     public init(url: URL, autoScales: Bool = true) {
@@ -181,6 +191,7 @@ public struct PDFView: View {
                     autoScales:       autoScales,
                     displayMode:      displayMode,
                     displayDirection: displayDirection,
+                    backgroundColor:  backgroundColor,
                     scaleFactor:      scaleFactor,
                     goToPageIndex:    goToPageIndex
                 ).Compose(context: context)
@@ -196,6 +207,7 @@ struct PDFPageComposer: ContentComposer {
     let autoScales: Bool
     let displayMode: PDFDisplayMode
     let displayDirection: PDFDisplayDirection
+    let backgroundColor: Color
     let scaleFactor: Double
     let goToPageIndex: Int?
 
@@ -206,7 +218,8 @@ struct PDFPageComposer: ContentComposer {
         let config         = androidx.compose.ui.platform.LocalConfiguration.current
         let screenWidthDp  = config.screenWidthDp
         let screenHeightDp = config.screenHeightDp
-        let paddingDp      = 12
+        // Fix 2: explicit Dp type for paddingDp to avoid .dp inference failures
+        let paddingDp: androidx.compose.ui.unit.Dp = 12.dp
         let isHorizontal   = displayDirection == .horizontal
         let isSinglePage   = displayMode == .singlePage || displayMode == .twoUp
         let listState      = androidx.compose.foundation.lazy.rememberLazyListState()
@@ -217,19 +230,25 @@ struct PDFPageComposer: ContentComposer {
             }
         }
 
-        let bgModifier = context.modifier
+        // Fix 3: explicit Modifier type so .fillMaxSize() resolves
+        // Fix 4: use backgroundColor property via asComposeColor()
+        let bgModifier: androidx.compose.ui.Modifier = context.modifier
             .fillMaxSize()
-            .background(androidx.compose.ui.graphics.Color(0xFFF2F2F7))
+            .background(backgroundColor.asComposeColor())
 
-        let hSpacing = isSinglePage ? screenWidthDp.dp  : 12.dp
-        let vSpacing = isSinglePage ? screenHeightDp.dp : 12.dp
+        // Fix 5: explicit Dp type on spacing to resolve ternary type inference
+        let hSpacing: androidx.compose.ui.unit.Dp = isSinglePage ? screenWidthDp.dp  : 12.dp
+        let vSpacing: androidx.compose.ui.unit.Dp = isSinglePage ? screenHeightDp.dp : 12.dp
+
+        // paddingDp as Int for pixel arithmetic in renderPage
+        let paddingPx = 12
 
         if isHorizontal {
             androidx.compose.foundation.lazy.LazyRow(
                 state: listState,
                 modifier: bgModifier,
                 contentPadding: androidx.compose.foundation.layout.PaddingValues(
-                    horizontal: paddingDp.dp, vertical: paddingDp.dp
+                    horizontal: paddingDp, vertical: paddingDp
                 ),
                 horizontalArrangement: androidx.compose.foundation.layout.Arrangement
                     .spacedBy(hSpacing)
@@ -241,7 +260,7 @@ struct PDFPageComposer: ContentComposer {
                         autoScales:    autoScales,
                         scaleFactor:   scaleFactor,
                         screenWidthDp: screenWidthDp,
-                        paddingDp:     paddingDp,
+                        paddingPx:     paddingPx,
                         density:       density,
                         isHorizontal:  true
                     )
@@ -252,7 +271,7 @@ struct PDFPageComposer: ContentComposer {
                 state: listState,
                 modifier: bgModifier,
                 contentPadding: androidx.compose.foundation.layout.PaddingValues(
-                    horizontal: paddingDp.dp, vertical: paddingDp.dp
+                    horizontal: paddingDp, vertical: paddingDp
                 ),
                 verticalArrangement: androidx.compose.foundation.layout.Arrangement
                     .spacedBy(vSpacing)
@@ -264,7 +283,7 @@ struct PDFPageComposer: ContentComposer {
                         autoScales:    autoScales,
                         scaleFactor:   scaleFactor,
                         screenWidthDp: screenWidthDp,
-                        paddingDp:     paddingDp,
+                        paddingPx:     paddingPx,
                         density:       density,
                         isHorizontal:  false
                     )
@@ -280,13 +299,13 @@ struct PDFPageComposer: ContentComposer {
         autoScales: Bool,
         scaleFactor: Double,
         screenWidthDp: Int,
-        paddingDp: Int,
+        paddingPx: Int,
         density: androidx.compose.ui.unit.Density,
         isHorizontal: Bool
     ) {
         guard let pdfPage = document.page(at: index) else { return }
         let bounds     = pdfPage.bounds
-        let availableW = screenWidthDp - paddingDp * 2
+        let availableW = screenWidthDp - paddingPx * 2
         let widthPx    = Int(Double(availableW) * Double(density.density) * scaleFactor)
         let heightPx   = Int(Double(widthPx) * bounds.height / bounds.width)
 
@@ -298,17 +317,18 @@ struct PDFPageComposer: ContentComposer {
         pdfPage.renderToBitmap(bitmap: bitmap)
         pdfPage.close()
 
-        // Pre-compute modifier — fixes inline-if-in-arg issue
+        // Fix 6: explicit Modifier type on baseModifier
         let baseModifier: androidx.compose.ui.Modifier = isHorizontal
-            ? androidx.compose.ui.Modifier.width((screenWidthDp - paddingDp * 2).dp)
+            ? androidx.compose.ui.Modifier.width((screenWidthDp - paddingPx * 2).dp)
             : androidx.compose.ui.Modifier.fillMaxWidth()
 
-        let cardModifier = baseModifier
+        // Fix 7: explicit Modifier type on cardModifier
+        let cardModifier: androidx.compose.ui.Modifier = baseModifier
             .clip(androidx.compose.foundation.shape.RoundedCornerShape(8.dp))
             .background(androidx.compose.ui.graphics.Color.White)
 
-        // Pre-compute contentScale — fixes inline-if-in-arg issue
-        let contentScale = autoScales
+        // Fix 8: explicit ContentScale type
+        let contentScale: androidx.compose.ui.layout.ContentScale = autoScales
             ? androidx.compose.ui.layout.ContentScale.FillWidth
             : androidx.compose.ui.layout.ContentScale.None
 
@@ -320,7 +340,63 @@ struct PDFPageComposer: ContentComposer {
         )
     }
 }
+
+#elseif canImport(SwiftUI)
+// macOS CI
+import Foundation
+import SwiftUI
+
+public struct PDFView: View {
+    public var document: PDFDocument?
+    public var autoScales: Bool = true
+    public var displayMode: PDFDisplayMode = .singlePageContinuous
+    public var displayDirection: PDFDisplayDirection = .vertical
+    public var scaleFactor: Double = 1.0
+    public var minScaleFactor: Double = 0.25
+    public var maxScaleFactor: Double = 4.0
+    public var interpolationQuality: PDFInterpolationQuality = .high
+    public var pageShadowsEnabled: Bool = true
+    public var displaysPageBreaks: Bool = true
+    public var displaysAsBook: Bool = false
+    public var goToPageIndex: Int?
+
+    public init(
+        document: PDFDocument? = nil,
+        autoScales: Bool = true,
+        displayMode: PDFDisplayMode = .singlePageContinuous,
+        displayDirection: PDFDisplayDirection = .vertical,
+        scaleFactor: Double = 1.0,
+        minScaleFactor: Double = 0.25,
+        maxScaleFactor: Double = 4.0,
+        interpolationQuality: PDFInterpolationQuality = .high,
+        pageShadowsEnabled: Bool = true,
+        displaysPageBreaks: Bool = true,
+        displaysAsBook: Bool = false,
+        goToPageIndex: Int? = nil
+    ) {
+        self.document             = document
+        self.autoScales           = autoScales
+        self.displayMode          = displayMode
+        self.displayDirection     = displayDirection
+        self.scaleFactor          = scaleFactor
+        self.minScaleFactor       = minScaleFactor
+        self.maxScaleFactor       = maxScaleFactor
+        self.interpolationQuality = interpolationQuality
+        self.pageShadowsEnabled   = pageShadowsEnabled
+        self.displaysPageBreaks   = displaysPageBreaks
+        self.displaysAsBook       = displaysAsBook
+        self.goToPageIndex        = goToPageIndex
+    }
+
+    public init(url: URL, autoScales: Bool = true) {
+        self.init(document: PDFDocument(url: url), autoScales: autoScales)
+    }
+
+    public var body: some View { EmptyView() }
+}
+
 #else
+// Native Android Swift (Fuse build)
 import Foundation
 import SkipUI
 
@@ -367,6 +443,7 @@ public struct PDFView: View {
     }
 
     public init(url: URL, autoScales: Bool = true) {
+        // Stub — real loading happens in #elseif SKIP
         self.init(document: nil, autoScales: autoScales)
     }
 
