@@ -104,6 +104,14 @@ public class PDFRenderer {
     }
 }
 #elseif SKIP
+// SKIP INSERT: import androidx.compose.foundation.*
+// SKIP INSERT: import androidx.compose.foundation.layout.*
+// SKIP INSERT: import androidx.compose.ui.*
+// SKIP INSERT: import androidx.compose.ui.graphics.*
+// SKIP INSERT: import androidx.compose.ui.graphics.asImageBitmap
+// SKIP INSERT: import androidx.compose.ui.layout.*
+// SKIP INSERT: import androidx.compose.ui.unit.*
+// SKIP INSERT: import androidx.compose.ui.draw.*
 public class PDFRenderer {
     private let bounds: PDFRect
 
@@ -124,7 +132,8 @@ public class PDFRenderer {
         let stream = java.io.ByteArrayOutputStream()
         document.writeTo(stream)
         document.close()
-        return Data(bytes: stream.toByteArray().toUByteArray().asList())
+        let bytes: [UInt8] = Array(stream.toByteArray().toUByteArray().toMutableList())
+        return Data(bytes: bytes)
     }
 
     public func writePDF(
