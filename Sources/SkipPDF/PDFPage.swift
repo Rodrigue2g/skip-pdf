@@ -5,7 +5,7 @@
 //  Created by Rodrigue de Guerre on 27/02/2026.
 //
 
-#if !SKIP
+#if canImport(PDFKit)
 import PDFKit
 public typealias PDFPage = PDFKit.PDFPage
 #else

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-#if !SKIP
+#if canImport(PDFKit)
 import PDFKit
 public typealias PDFDocument = PDFKit.PDFDocument
 #else
