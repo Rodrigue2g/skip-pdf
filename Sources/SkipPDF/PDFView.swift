@@ -320,4 +320,56 @@ struct PDFPageComposer: ContentComposer {
         )
     }
 }
+#else
+import Foundation
+import SkipUI
+
+public struct PDFView: View {
+    public var document: PDFDocument?
+    public var autoScales: Bool = true
+    public var displayMode: PDFDisplayMode = .singlePageContinuous
+    public var displayDirection: PDFDisplayDirection = .vertical
+    public var scaleFactor: Double = 1.0
+    public var minScaleFactor: Double = 0.25
+    public var maxScaleFactor: Double = 4.0
+    public var interpolationQuality: PDFInterpolationQuality = .high
+    public var pageShadowsEnabled: Bool = true
+    public var displaysPageBreaks: Bool = true
+    public var displaysAsBook: Bool = false
+    public var goToPageIndex: Int?
+
+    public init(
+        document: PDFDocument? = nil,
+        autoScales: Bool = true,
+        displayMode: PDFDisplayMode = .singlePageContinuous,
+        displayDirection: PDFDisplayDirection = .vertical,
+        scaleFactor: Double = 1.0,
+        minScaleFactor: Double = 0.25,
+        maxScaleFactor: Double = 4.0,
+        interpolationQuality: PDFInterpolationQuality = .high,
+        pageShadowsEnabled: Bool = true,
+        displaysPageBreaks: Bool = true,
+        displaysAsBook: Bool = false,
+        goToPageIndex: Int? = nil
+    ) {
+        self.document             = document
+        self.autoScales           = autoScales
+        self.displayMode          = displayMode
+        self.displayDirection     = displayDirection
+        self.scaleFactor          = scaleFactor
+        self.minScaleFactor       = minScaleFactor
+        self.maxScaleFactor       = maxScaleFactor
+        self.interpolationQuality = interpolationQuality
+        self.pageShadowsEnabled   = pageShadowsEnabled
+        self.displaysPageBreaks   = displaysPageBreaks
+        self.displaysAsBook       = displaysAsBook
+        self.goToPageIndex        = goToPageIndex
+    }
+
+    public init(url: URL, autoScales: Bool = true) {
+        self.init(document: nil, autoScales: autoScales)
+    }
+
+    public var body: some View { EmptyView() }
+}
 #endif
